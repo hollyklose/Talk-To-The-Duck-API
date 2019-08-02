@@ -21,7 +21,11 @@ const blogPostSchema = new mongoose.Schema({
     }
   }],
   comments: [{
-    text: String,
+    text: {
+      type: String,
+      minlength: 1,
+      maxlength: 700
+    },
     postedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'

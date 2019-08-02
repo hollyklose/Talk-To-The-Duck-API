@@ -1,7 +1,7 @@
 #!/bin/bash
-EMAIL="e@e"
-NAME="eliza"
-PASSWORD="pw"
+EMAIL="holly121@holly"
+PASSWORD="123"
+NAME="Holly121"
 
 API="http://localhost:4741"
 URL_PATH="/sign-up"
