@@ -67,8 +67,9 @@ router.post('/blogposts/:post_id/comments', requireToken, removeBlanks, (req, re
   BlogPost.findById(req.params.post_id)
     .then(handle404)
     .then(post => {
-      return post.update({$push: { 'comments': { text: req.body.comment, postedBy: req.user.id } }})
+      return post.update({$push: { 'comments': { text: req.body.comment, postedBy: req.user.id } }}, { runValidators: true })
     })
+    .then(handle404)
     .then(() => res.sendStatus(204))
     .catch(next)
 })
@@ -92,7 +93,7 @@ router.patch('/blogposts/:post_id/comments/:id', requireToken, (req, res, next) 
       const comment = post.comments.find((comment) => comment._id.toString() === req.params.id)
       commentOwnership(req, comment)
       return BlogPost.update({'comments._id': req.params.id}, // didn't found a better way
-        { $set: { 'comments.$.text': req.body.comment } }
+        { $set: { 'comments.$.text': req.body.comment } }, { runValidators: true }
       )
     })
     .then(() => res.sendStatus(204))
